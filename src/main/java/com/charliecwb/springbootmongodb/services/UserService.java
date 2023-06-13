@@ -28,12 +28,19 @@ public class UserService {
 		return repository.insert(obj);
 	}
 	
-	public User fromDTO(UserDTO obj) {
-		return new User(obj.getId(), obj.getName(), obj.getEmail());
-	}
-	
 	public void delete(String id) {
 		findById(id);
 		repository.deleteById(id);
+	}
+	
+	public User update(User obj) {
+		User user = findById(obj.getId());
+		user.setName(obj.getName());
+		user.setEmail(obj.getEmail());
+		return repository.save(user);
+	}
+	
+	public User fromDTO(UserDTO obj) {
+		return new User(obj.getId(), obj.getName(), obj.getEmail());
 	}
 }
