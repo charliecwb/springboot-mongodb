@@ -25,6 +25,10 @@ public class PostService {
 		return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id));
 	}
 	
+	public List<Post> findByTitle(String title) {
+		return repository.findByTitleContainingIgnoreCase(title);
+	}
+	
 	public Post insert(Post obj) {
 		return repository.insert(obj);
 	}

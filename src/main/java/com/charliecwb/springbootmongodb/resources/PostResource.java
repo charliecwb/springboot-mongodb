@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.charliecwb.springbootmongodb.domain.Post;
+import com.charliecwb.springbootmongodb.resources.util.Util;
 import com.charliecwb.springbootmongodb.services.PostService;
 
 @RestController
@@ -40,4 +42,10 @@ public class PostResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@GetMapping(value = "/titlesearch")
+	public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String param) {
+		List<Post> posts = service.findByTitle(Util.decodeParam(param));
+		return ResponseEntity.ok().body(posts);
+	}	
 }
