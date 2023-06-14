@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.charliecwb.springbootmongodb.domain.Post;
 import com.charliecwb.springbootmongodb.domain.User;
+import com.charliecwb.springbootmongodb.dto.AuthorDTO;
 import com.charliecwb.springbootmongodb.repositories.PostRepository;
 import com.charliecwb.springbootmongodb.repositories.UserRepository;
 
@@ -36,8 +37,8 @@ public class TestConfig implements CommandLineRunner{
 			
 		userRepository.saveAll(Arrays.asList(u1, u2, u3));
 		
-		Post p1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem", "Vou viajar para São Paulo", u1);
-		Post p2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia", "Estoy em sampa!", u1);
+		Post p1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem", "Vou viajar para São Paulo", new AuthorDTO(u1));
+		Post p2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia", "Estoy em sampa!", new AuthorDTO(u1));
 		
 		postRepository.saveAll(Arrays.asList(p1, p2));
 	}	
