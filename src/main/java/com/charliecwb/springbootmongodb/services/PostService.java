@@ -29,6 +29,10 @@ public class PostService {
 		return repository.findByTitleContainingIgnoreCase(title);
 	}
 	
+	public List<Post> searchTitle(String title) {
+		return repository.searchTitle(title);
+	}	
+	
 	public Post insert(Post obj) {
 		return repository.insert(obj);
 	}
