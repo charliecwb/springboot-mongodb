@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.charliecwb.springbootmongodb.domain.User;
+import com.charliecwb.springbootmongodb.dto.PostDTO;
 import com.charliecwb.springbootmongodb.dto.UserDTO;
 import com.charliecwb.springbootmongodb.services.UserService;
 
@@ -57,5 +58,11 @@ public class UserResource {
 		user.setId(id);
 		UserDTO resp = new UserDTO(service.update(user));
 		return ResponseEntity.ok().body(resp);
-	}	
+	}
+	
+	@GetMapping(value = "/{id}/posts")
+	public ResponseEntity<List<PostDTO>> findPosts(@PathVariable String id) {
+		List<PostDTO> resp = service.findById(id).getPosts().stream().map(x -> new PostDTO(x)).toList();
+		return ResponseEntity.ok().body(resp);
+	}
 }
