@@ -1,7 +1,10 @@
 package com.charliecwb.springbootmongodb.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.charliecwb.springbootmongodb.domain.Post;
 import com.charliecwb.springbootmongodb.domain.User;
 
 public class UserDTO implements Serializable {
@@ -10,6 +13,7 @@ public class UserDTO implements Serializable {
 	private String id;
 	private String name;
 	private String email;
+	private List<PostDTO> posts = new ArrayList<>();
 	
 	public UserDTO() {}
 	
@@ -17,6 +21,7 @@ public class UserDTO implements Serializable {
 		id = user.getId();
 		name = user.getName();
 		email = user.getEmail();
+		posts = user.getPosts().stream().map(x -> new PostDTO(x)).toList(); 
 	}
 
 	public String getId() {
@@ -41,5 +46,13 @@ public class UserDTO implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<PostDTO> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<PostDTO> posts) {
+		this.posts = posts;
 	}	
 }

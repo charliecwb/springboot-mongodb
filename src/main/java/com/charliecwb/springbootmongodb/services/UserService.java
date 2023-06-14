@@ -3,9 +3,9 @@ package com.charliecwb.springbootmongodb.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.charliecwb.springbootmongodb.domain.Post;
 import com.charliecwb.springbootmongodb.domain.User;
 import com.charliecwb.springbootmongodb.dto.UserDTO;
 import com.charliecwb.springbootmongodb.repositories.UserRepository;
@@ -41,6 +41,10 @@ public class UserService {
 	}
 	
 	public User fromDTO(UserDTO obj) {
-		return new User(obj.getId(), obj.getName(), obj.getEmail());
+		User resp = new User(obj.getId(), obj.getName(), obj.getEmail());
+		List<Post> posts = obj.getPosts().stream().map(x -> x.fromDTO(resp)).toList();
+		resp.getPosts().addAll(posts);	
+		
+		return resp;
 	}
 }
