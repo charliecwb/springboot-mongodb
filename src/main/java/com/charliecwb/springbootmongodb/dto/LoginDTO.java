@@ -25,13 +25,7 @@ public class LoginDTO implements Serializable {
 
 	public LoginDTO(String userName, String password) {
 		this.userName = userName;
-		try {
-			this.password = Util.encryptPassword(password);
-		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | UnsupportedEncodingException
-				| IllegalBlockSizeException | BadPaddingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.password = Util.encryptPassword(password);
 	}
 	
 	public String getUserName() {

@@ -1,22 +1,25 @@
 package com.charliecwb.springbootmongodb.resources.util;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
 import java.util.TimeZone;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
 
 public class Util {
+	public static final String ALGORITHM = "RSA";
+	public static final String PATH_PRIVATE_KEY = "./keys/private.key";
+	public static final String PATH_PUBLIC_KEY = "./keys/public.key";
+
 	public static String decodeParam(String param) {
 		try {
 			return URLDecoder.decode(param, "UTF-8");
@@ -34,44 +37,43 @@ public class Util {
 			return defaultDate;
 		}
 	}
+	
+	private static PublicKey getPublicKey() throws ClassNotFoundException, IOException {
+		ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(PATH_PUBLIC_KEY));
+	    return (PublicKey) inputStream.readObject();
+	}
+	
+	private static PrivateKey getPrivateKey() throws IOException, ClassNotFoundException {
+		ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(PATH_PRIVATE_KEY));
+		return (PrivateKey) inputStream.readObject();
+	}
+	
+	public static String decryptPassword(String password) {
+	    byte[] decryptedText = null;
 
-	public static String decryptPassword(String password) throws NoSuchAlgorithmException, NoSuchPaddingException,
-			UnsupportedEncodingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-		KeyGenerator keygenerator = KeyGenerator.getInstance("DES");
-		SecretKey myDesKey = keygenerator.generateKey();
+	    try {
+	      Cipher cipher = Cipher.getInstance(ALGORITHM);
+	      cipher.init(Cipher.DECRYPT_MODE, getPrivateKey());
+	      decryptedText = cipher.doFinal(Base64.getDecoder().decode(password));
 
-		// Creating object of Cipher
-		Cipher desCipher;
-		desCipher = Cipher.getInstance("DES");
+	    } catch (Exception ex) {
+	      ex.printStackTrace();
+	    }
 
-		// Creating byte array to store string
-		byte[] text = password.getBytes("UTF8");
-
-		// Encrypting text
-		desCipher.init(Cipher.DECRYPT_MODE, myDesKey);
-		byte[] textEncrypted = desCipher.doFinal(text);
-
-		// Converting encrypted byte array to string
-		return new String(textEncrypted);
+	    return new String(decryptedText);
 	}
 
-	public static String encryptPassword(String password) throws NoSuchAlgorithmException, NoSuchPaddingException,
-			UnsupportedEncodingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-		KeyGenerator keygenerator = KeyGenerator.getInstance("DES");
-		SecretKey myDesKey = keygenerator.generateKey();
+	public static String encryptPassword(String password) {
+	    byte[] textEncrypted = null;
 
-		// Creating object of Cipher
-		Cipher desCipher;
-		desCipher = Cipher.getInstance("DES");
+	    try {
+	      Cipher cipher = Cipher.getInstance(ALGORITHM);
+	      cipher.init(Cipher.ENCRYPT_MODE, getPublicKey());
+	      textEncrypted = cipher.doFinal(password.getBytes());
+	    } catch (Exception e) {
+	      e.printStackTrace();
+	    }
 
-		// Creating byte array to store string
-		byte[] text = password.getBytes("UTF8");
-
-		// Encrypting text
-		desCipher.init(Cipher.ENCRYPT_MODE, myDesKey);
-		byte[] textEncrypted = desCipher.doFinal(text);
-
-		// Converting encrypted byte array to string
-		return new String(textEncrypted);
+		return Base64.getEncoder().encodeToString(textEncrypted);
 	}
 }

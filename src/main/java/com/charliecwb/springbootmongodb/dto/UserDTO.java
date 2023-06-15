@@ -1,31 +1,42 @@
 package com.charliecwb.springbootmongodb.dto;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
 import com.charliecwb.springbootmongodb.domain.Post;
 import com.charliecwb.springbootmongodb.domain.User;
+import com.charliecwb.springbootmongodb.resources.util.Util;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class UserDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private String id;
 	private String name;
 	private String email;
 	@JsonIgnore
 	private List<PostDTO> posts = new ArrayList<>();
 	private LoginDTO login;
-	
-	public UserDTO() {}
-	
+
+	public UserDTO() {
+	}
+
 	public UserDTO(User user) {
 		id = user.getId();
 		name = user.getName();
 		email = user.getEmail();
 		posts = user.getPosts().stream().map(x -> new PostDTO(x)).toList();
-		login = new LoginDTO(user.getLogin().getUserName(), user.getLogin().getPassword());
+		login = new LoginDTO();
+		login.setUserName(user.getLogin().getUserName());
+		login.setPassword(Util.decryptPassword(user.getLogin().getPassword()));
 	}
 
 	public String getId() {
@@ -66,5 +77,5 @@ public class UserDTO implements Serializable {
 
 	public void setLogin(LoginDTO login) {
 		this.login = login;
-	}	
+	}
 }
