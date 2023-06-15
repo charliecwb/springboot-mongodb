@@ -1,14 +1,12 @@
 package com.charliecwb.springbootmongodb.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.charliecwb.springbootmongodb.domain.Post;
-import com.charliecwb.springbootmongodb.domain.User;
-import com.charliecwb.springbootmongodb.dto.AuthorDTO;
-import com.charliecwb.springbootmongodb.dto.PostDTO;
 import com.charliecwb.springbootmongodb.repositories.PostRepository;
 import com.charliecwb.springbootmongodb.services.exception.ObjectNotFoundException;
 
@@ -31,6 +29,11 @@ public class PostService {
 	
 	public List<Post> searchTitle(String title) {
 		return repository.searchTitle(title);
+	}
+	
+	public List<Post> fullSearch(String text, Date min, Date max) {
+		max = new Date(max.getTime() + 24 * 60 * 60 * 1000); 
+		return repository.fullSearch(text, min, max);
 	}	
 	
 	public Post insert(Post obj) {

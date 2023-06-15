@@ -1,6 +1,6 @@
 package com.charliecwb.springbootmongodb.resources;
 
-import java.net.URI;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.charliecwb.springbootmongodb.domain.Post;
 import com.charliecwb.springbootmongodb.resources.util.Util;
@@ -52,6 +49,15 @@ public class PostResource {
 	@GetMapping(value = "/titlesearch2")
 	public ResponseEntity<List<Post>> searchTitle(@RequestParam(value = "text", defaultValue = "") String param) {
 		List<Post> posts = service.searchTitle(Util.decodeParam(param));
+		return ResponseEntity.ok().body(posts);
+	}
+	
+	@GetMapping(value = "/fullsearch")
+	public ResponseEntity<List<Post>> fullSearch(@RequestParam(value = "text", defaultValue = "") String text, 
+			@RequestParam(value = "minDate", defaultValue = "") String min, 
+			@RequestParam(value = "maxDate", defaultValue = "") String max) {
+		List<Post> posts = service.fullSearch(Util.decodeParam(text), 
+				Util.convertDate(min, new Date(0L)), Util.convertDate(max, new Date()));
 		return ResponseEntity.ok().body(posts);
 	}	
 }
