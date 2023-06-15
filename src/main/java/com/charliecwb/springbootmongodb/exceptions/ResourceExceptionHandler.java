@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.charliecwb.springbootmongodb.services.exception.ObjectNotFoundException;
+import com.charliecwb.springbootmongodb.services.exception.UserNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -19,4 +20,11 @@ public class ResourceExceptionHandler {
 				e.getMessage(), req.getRequestURI());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
 	}
+	
+	@ExceptionHandler(UserNotFoundException.class)
+	public ResponseEntity<StandardError> userNotFound(UserNotFoundException e, HttpServletRequest req) {
+		StandardError err = new StandardError(Instant.now(), HttpStatus.NOT_FOUND.value(), "User not found",
+				e.getMessage(), req.getRequestURI());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+	}	
 }

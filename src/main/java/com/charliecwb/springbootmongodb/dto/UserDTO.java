@@ -1,17 +1,9 @@
 package com.charliecwb.springbootmongodb.dto;
 
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-
-import com.charliecwb.springbootmongodb.domain.Post;
 import com.charliecwb.springbootmongodb.domain.User;
 import com.charliecwb.springbootmongodb.resources.util.Util;
 import com.fasterxml.jackson.annotation.JsonIgnore;

@@ -10,6 +10,7 @@ import com.charliecwb.springbootmongodb.domain.User;
 import com.charliecwb.springbootmongodb.dto.UserDTO;
 import com.charliecwb.springbootmongodb.repositories.UserRepository;
 import com.charliecwb.springbootmongodb.services.exception.ObjectNotFoundException;
+import com.charliecwb.springbootmongodb.services.exception.UserNotFoundException;
 
 @Service
 public class UserService {
@@ -19,6 +20,13 @@ public class UserService {
 	public List<User> findAll() {
 		return repository.findAll(); 
 	}
+	
+	public void findByUserName(String text) {
+		User resp = repository.findByLoginUserName(text);
+		if (resp == null) {
+			throw new UserNotFoundException(text);
+		}
+	}	
 	
 	public User findById(String id) {
 		return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id));

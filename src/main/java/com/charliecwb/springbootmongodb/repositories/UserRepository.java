@@ -7,5 +7,5 @@ import com.charliecwb.springbootmongodb.domain.User;
 
 @Repository
 public interface UserRepository extends MongoRepository<User, String> { 
-
+	User findByLoginUserName(String text);	
 }
