@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.charliecwb.springbootmongodb.domain.Post;
 import com.charliecwb.springbootmongodb.domain.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class UserDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -13,6 +14,7 @@ public class UserDTO implements Serializable {
 	private String id;
 	private String name;
 	private String email;
+	@JsonIgnore
 	private List<PostDTO> posts = new ArrayList<>();
 	
 	public UserDTO() {}

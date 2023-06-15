@@ -28,12 +28,6 @@ public class PostResource {
 		return ResponseEntity.ok().body(list);
 	}
 	
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<Post> findById(@PathVariable String id) {
-		Post post = service.findById(id);
-		return ResponseEntity.ok().body(post);
-	}
-	
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable String id) {
 		service.delete(id);
@@ -46,11 +40,17 @@ public class PostResource {
 		return ResponseEntity.ok().body(posts);
 	}
 	
-	@GetMapping(value = "/titlesearch2")
-	public ResponseEntity<List<Post>> searchTitle(@RequestParam(value = "text", defaultValue = "") String param) {
-		List<Post> posts = service.searchTitle(Util.decodeParam(param));
+	@GetMapping(value = "/bodysearch")
+	public ResponseEntity<List<Post>> findByBody(@RequestParam(value = "text", defaultValue = "") String param) {
+		List<Post> posts = service.findByBody(Util.decodeParam(param));
 		return ResponseEntity.ok().body(posts);
 	}
+	
+	@GetMapping(value = "/commentssearch")
+	public ResponseEntity<List<Post>> findByComments(@RequestParam(value = "text", defaultValue = "") String param) {
+		List<Post> posts = service.findByComments(Util.decodeParam(param));
+		return ResponseEntity.ok().body(posts);
+	}		
 	
 	@GetMapping(value = "/fullsearch")
 	public ResponseEntity<List<Post>> fullSearch(@RequestParam(value = "text", defaultValue = "") String text, 

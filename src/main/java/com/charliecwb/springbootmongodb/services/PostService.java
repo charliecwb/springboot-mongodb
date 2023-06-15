@@ -23,14 +23,18 @@ public class PostService {
 		return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id));
 	}
 	
-	public List<Post> findByTitle(String title) {
-		return repository.findByTitleContainingIgnoreCase(title);
+	public List<Post> findByTitle(String text) {
+		return repository.findByTitleContainingIgnoreCase(text);
 	}
 	
-	public List<Post> searchTitle(String title) {
-		return repository.searchTitle(title);
+	public List<Post> findByBody(String text) {
+		return repository.findByBodyContainingIgnoreCase(text);
 	}
 	
+	public List<Post> findByComments(String text) {
+		return repository.findByCommentsTextContainingIgnoreCase(text);
+	}	
+		
 	public List<Post> fullSearch(String text, Date min, Date max) {
 		max = new Date(max.getTime() + 24 * 60 * 60 * 1000); 
 		return repository.fullSearch(text, min, max);
