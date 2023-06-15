@@ -13,6 +13,7 @@ import com.charliecwb.springbootmongodb.domain.Post;
 import com.charliecwb.springbootmongodb.domain.User;
 import com.charliecwb.springbootmongodb.dto.AuthorDTO;
 import com.charliecwb.springbootmongodb.dto.CommentDTO;
+import com.charliecwb.springbootmongodb.dto.LoginDTO;
 import com.charliecwb.springbootmongodb.repositories.PostRepository;
 import com.charliecwb.springbootmongodb.repositories.UserRepository;
 
@@ -23,8 +24,8 @@ public class TestConfig implements CommandLineRunner{
 	private UserRepository userRepository;
 	
 	@Autowired
-	private PostRepository postRepository;	
-
+	private PostRepository postRepository;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -35,8 +36,15 @@ public class TestConfig implements CommandLineRunner{
 		User u1 = new User(null, "Maria Brown", "maria@gmail.com");
 		User u2 = new User(null, "Alex Green", "alex@gmail.com");
 		User u3 = new User(null, "Bob Grey", "bob@gmail.com");
-			
-		userRepository.saveAll(Arrays.asList(u1, u2, u3));
+					
+		LoginDTO l1 = new LoginDTO("maria_brown", "123456");
+		LoginDTO l2 = new LoginDTO("alex_green", "123456");
+		LoginDTO l3 = new LoginDTO("bob_grey", "123456");
+		
+		u1.setLogin(l1);
+		u2.setLogin(l2);
+		u3.setLogin(l3);
+		userRepository.saveAll(Arrays.asList(u1, u2, u3));		
 		
 		Post p1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem", "Vou viajar para São Paulo", new AuthorDTO(u1));
 		Post p2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia", "Estoy em sampa!", new AuthorDTO(u1));

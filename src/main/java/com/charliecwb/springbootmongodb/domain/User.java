@@ -9,6 +9,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.charliecwb.springbootmongodb.dto.LoginDTO;
+
 @Document(collection = "user")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -20,6 +22,8 @@ public class User implements Serializable {
 	
 	@DBRef(lazy = true)
 	private List<Post> posts = new ArrayList<>();
+	
+	private LoginDTO login;
 	
 	public User() {}
 
@@ -59,6 +63,14 @@ public class User implements Serializable {
 
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
+	}
+
+	public LoginDTO getLogin() {
+		return login;
+	}
+
+	public void setLogin(LoginDTO login) {
+		this.login = login;
 	}
 
 	@Override
