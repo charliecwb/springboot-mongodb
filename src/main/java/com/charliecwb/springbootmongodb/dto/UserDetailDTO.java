@@ -1,29 +1,25 @@
 package com.charliecwb.springbootmongodb.dto;
 
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.charliecwb.springbootmongodb.resources.util.Util;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Document
-public class LoginDTO implements Serializable {
+public class UserDetailDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@JsonProperty(required = true)
 	private String userName;
+	@JsonProperty(required = true)
 	private String password;
 	
-	public LoginDTO() {}
+	public UserDetailDTO() {}
 
-	public LoginDTO(String userName, String password) {
+	public UserDetailDTO(String userName, String password) {
 		this.userName = userName;
 		this.password = Util.encryptPassword(password);
 	}
@@ -57,7 +53,7 @@ public class LoginDTO implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		LoginDTO other = (LoginDTO) obj;
+		UserDetailDTO other = (UserDetailDTO) obj;
 		return Objects.equals(userName, other.userName);
 	}
 }

@@ -16,7 +16,7 @@ public class UserDTO implements Serializable {
 	private String email;
 	@JsonIgnore
 	private List<PostDTO> posts = new ArrayList<>();
-	private LoginDTO login;
+	private UserDetailDTO login;
 
 	public UserDTO() {
 	}
@@ -26,7 +26,7 @@ public class UserDTO implements Serializable {
 		name = user.getName();
 		email = user.getEmail();
 		posts = user.getPosts().stream().map(x -> new PostDTO(x)).toList();
-		login = new LoginDTO();
+		login = new UserDetailDTO();
 		login.setUserName(user.getLogin().getUserName());
 		login.setPassword(Util.decryptPassword(user.getLogin().getPassword()));
 	}
@@ -63,11 +63,11 @@ public class UserDTO implements Serializable {
 		this.posts = posts;
 	}
 
-	public LoginDTO getLogin() {
+	public UserDetailDTO getLogin() {
 		return login;
 	}
 
-	public void setLogin(LoginDTO login) {
+	public void setLogin(UserDetailDTO login) {
 		this.login = login;
 	}
 }

@@ -40,12 +40,20 @@ public class Util {
 	
 	private static PublicKey getPublicKey() throws ClassNotFoundException, IOException {
 		ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(PATH_PUBLIC_KEY));
-	    return (PublicKey) inputStream.readObject();
+		try {
+		    return (PublicKey) inputStream.readObject();
+		} finally {
+			inputStream.close();
+		}
 	}
 	
 	private static PrivateKey getPrivateKey() throws IOException, ClassNotFoundException {
 		ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(PATH_PRIVATE_KEY));
-		return (PrivateKey) inputStream.readObject();
+		try {
+			return (PrivateKey) inputStream.readObject();
+		} finally {
+			inputStream.close();
+		}
 	}
 	
 	public static String decryptPassword(String password) {

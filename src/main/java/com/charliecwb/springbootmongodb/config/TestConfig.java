@@ -13,7 +13,7 @@ import com.charliecwb.springbootmongodb.domain.Post;
 import com.charliecwb.springbootmongodb.domain.User;
 import com.charliecwb.springbootmongodb.dto.AuthorDTO;
 import com.charliecwb.springbootmongodb.dto.CommentDTO;
-import com.charliecwb.springbootmongodb.dto.LoginDTO;
+import com.charliecwb.springbootmongodb.dto.UserDetailDTO;
 import com.charliecwb.springbootmongodb.repositories.PostRepository;
 import com.charliecwb.springbootmongodb.repositories.UserRepository;
 
@@ -37,9 +37,9 @@ public class TestConfig implements CommandLineRunner{
 		User u2 = new User(null, "Alex Green", "alex@gmail.com");
 		User u3 = new User(null, "Bob Grey", "bob@gmail.com");
 					
-		LoginDTO l1 = new LoginDTO("maria_brown", "123456");
-		LoginDTO l2 = new LoginDTO("alex_green", "123456");
-		LoginDTO l3 = new LoginDTO("bob_grey", "123456");
+		UserDetailDTO l1 = new UserDetailDTO("maria_brown", "123456");
+		UserDetailDTO l2 = new UserDetailDTO("alex_green", "123456");
+		UserDetailDTO l3 = new UserDetailDTO("bob_grey", "123456");
 		
 		u1.setLogin(l1);
 		u2.setLogin(l2);

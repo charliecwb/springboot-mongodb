@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.charliecwb.springbootmongodb.dto.LoginDTO;
+import com.charliecwb.springbootmongodb.dto.UserDetailDTO;
 import com.charliecwb.springbootmongodb.services.UserService;
 
 @RestController
@@ -17,7 +17,7 @@ public class LoginResource {
 	private UserService service;
 	
 	@PostMapping(value = "/validate")
-	public ResponseEntity<Void> findByUserName(@RequestBody LoginDTO obj) {
+	public ResponseEntity<Void> findByUserName(@RequestBody UserDetailDTO obj) {
 		service.findByUserName(obj.getUserName());
 		return ResponseEntity.ok().build();
 	}

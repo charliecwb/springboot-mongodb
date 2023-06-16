@@ -9,7 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.charliecwb.springbootmongodb.dto.LoginDTO;
+import com.charliecwb.springbootmongodb.dto.UserDetailDTO;
 
 @Document(collection = "user")
 public class User implements Serializable {
@@ -19,11 +19,12 @@ public class User implements Serializable {
 	private String id;
 	private String name;
 	private String email;
+	private String phone;
 	
 	@DBRef(lazy = true)
 	private List<Post> posts = new ArrayList<>();
 	
-	private LoginDTO login;
+	private UserDetailDTO login;
 	
 	public User() {}
 
@@ -57,6 +58,14 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	public List<Post> getPosts() {
 		return posts;
 	}
@@ -65,11 +74,11 @@ public class User implements Serializable {
 		this.posts = posts;
 	}
 
-	public LoginDTO getLogin() {
+	public UserDetailDTO getLogin() {
 		return login;
 	}
 
-	public void setLogin(LoginDTO login) {
+	public void setLogin(UserDetailDTO login) {
 		this.login = login;
 	}
 

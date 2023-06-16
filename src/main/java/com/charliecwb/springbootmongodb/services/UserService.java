@@ -50,6 +50,7 @@ public class UserService {
 	
 	public User fromDTO(UserDTO obj) {
 		User resp = new User(obj.getId(), obj.getName(), obj.getEmail());
+		resp.setLogin(obj.getLogin());
 		List<Post> posts = obj.getPosts().stream().map(x -> x.fromDTO(resp)).toList();
 		resp.getPosts().addAll(posts);	
 		
