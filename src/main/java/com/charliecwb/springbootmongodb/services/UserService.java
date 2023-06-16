@@ -21,11 +21,12 @@ public class UserService {
 		return repository.findAll(); 
 	}
 	
-	public void findByUserName(String text) {
+	public User findByUserName(String text) {
 		User resp = repository.findByLoginUserName(text);
 		if (resp == null) {
 			throw new UserNotFoundException(text);
 		}
+		return resp;
 	}	
 	
 	public User findById(String id) {
@@ -49,7 +50,7 @@ public class UserService {
 	}
 	
 	public User fromDTO(UserDTO obj) {
-		User resp = new User(obj.getId(), obj.getName(), obj.getEmail());
+		User resp = new User(obj.getId(), obj.getName(), obj.getEmail(), obj.getPhone());
 		resp.setLogin(obj.getLogin());
 		List<Post> posts = obj.getPosts().stream().map(x -> x.fromDTO(resp)).toList();
 		resp.getPosts().addAll(posts);	

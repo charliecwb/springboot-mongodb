@@ -15,6 +15,16 @@ import java.util.TimeZone;
 
 import javax.crypto.Cipher;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.charliecwb.springbootmongodb.services.NexmoService;
+import com.nexmo.client.NexmoClientException;
+import com.nexmo.client.verify.CheckResponse;
+import com.nexmo.client.verify.VerifyClient;
+import com.nexmo.client.verify.VerifyRequest;
+import com.nexmo.client.verify.VerifyResponse;
+import com.nexmo.client.verify.VerifyStatus;
+
 public class Util {
 	public static final String ALGORITHM = "RSA";
 	public static final String PATH_PRIVATE_KEY = "./keys/private.key";

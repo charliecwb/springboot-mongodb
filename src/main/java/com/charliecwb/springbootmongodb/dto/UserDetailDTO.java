@@ -3,12 +3,10 @@ package com.charliecwb.springbootmongodb.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import com.charliecwb.springbootmongodb.resources.util.Util;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Document
 public class UserDetailDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -16,12 +14,15 @@ public class UserDetailDTO implements Serializable {
 	private String userName;
 	@JsonProperty(required = true)
 	private String password;
+	@JsonIgnore
+	private Boolean twoFA;
 	
 	public UserDetailDTO() {}
 
-	public UserDetailDTO(String userName, String password) {
+	public UserDetailDTO(String userName, String password, Boolean twoFA) {
 		this.userName = userName;
 		this.password = Util.encryptPassword(password);
+		this.twoFA = twoFA;
 	}
 	
 	public String getUserName() {
@@ -39,6 +40,14 @@ public class UserDetailDTO implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public Boolean getTwoFA() {
+		return twoFA;
+	}
+
+	public void setTwoFA(Boolean doubleAuthentication) {
+		this.twoFA = doubleAuthentication;
+	}	
 
 	@Override
 	public int hashCode() {

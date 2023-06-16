@@ -6,19 +6,21 @@ import java.io.ObjectOutputStream;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.charliecwb.springbootmongodb.resources.util.Util;
+import com.charliecwb.springbootmongodb.services.NexmoService;
+import com.nexmo.client.verify.VerifyClient;
 
 @SpringBootApplication
 public class SpringbootMongodbApplication {
-
 	public static void main(String[] args) {
 		if (!verifyIfExistKeysOnSO()) {
 			generateKey();
-		}
-
+		}	
+		
 		SpringApplication.run(SpringbootMongodbApplication.class, args);
 	}
 

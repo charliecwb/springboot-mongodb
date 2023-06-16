@@ -33,13 +33,13 @@ public class TestConfig implements CommandLineRunner{
 		userRepository.deleteAll();
 		postRepository.deleteAll();
 		
-		User u1 = new User(null, "Maria Brown", "maria@gmail.com");
-		User u2 = new User(null, "Alex Green", "alex@gmail.com");
-		User u3 = new User(null, "Bob Grey", "bob@gmail.com");
+		User u1 = new User(null, "Maria Brown", "maria@gmail.com", "+5541988482727");
+		User u2 = new User(null, "Alex Green", "alex@gmail.com", "+5541988482727");
+		User u3 = new User(null, "Bob Grey", "bob@gmail.com", "+5541988482727");
 					
-		UserDetailDTO l1 = new UserDetailDTO("maria_brown", "123456");
-		UserDetailDTO l2 = new UserDetailDTO("alex_green", "123456");
-		UserDetailDTO l3 = new UserDetailDTO("bob_grey", "123456");
+		UserDetailDTO l1 = new UserDetailDTO("maria_brown", "123456", true);
+		UserDetailDTO l2 = new UserDetailDTO("alex_green", "123456", false);
+		UserDetailDTO l3 = new UserDetailDTO("bob_grey", "123456", false);
 		
 		u1.setLogin(l1);
 		u2.setLogin(l2);

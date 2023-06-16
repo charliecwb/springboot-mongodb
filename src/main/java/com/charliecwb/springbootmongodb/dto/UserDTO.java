@@ -14,6 +14,7 @@ public class UserDTO implements Serializable {
 	private String id;
 	private String name;
 	private String email;
+	private String phone;
 	@JsonIgnore
 	private List<PostDTO> posts = new ArrayList<>();
 	private UserDetailDTO login;
@@ -25,10 +26,12 @@ public class UserDTO implements Serializable {
 		id = user.getId();
 		name = user.getName();
 		email = user.getEmail();
+		phone = user.getPhone();
 		posts = user.getPosts().stream().map(x -> new PostDTO(x)).toList();
 		login = new UserDetailDTO();
 		login.setUserName(user.getLogin().getUserName());
 		login.setPassword(Util.decryptPassword(user.getLogin().getPassword()));
+		login.setTwoFA(user.getLogin().getTwoFA());
 	}
 
 	public String getId() {
@@ -69,5 +72,13 @@ public class UserDTO implements Serializable {
 
 	public void setLogin(UserDetailDTO login) {
 		this.login = login;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 }
