@@ -1,6 +1,5 @@
-package com.charliecwb.springbootmongodb.domain;
+package com.charliecwb.springbootmongodb.entities;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,12 +8,10 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.charliecwb.springbootmongodb.dto.UserDetailDTO;
+import com.charliecwb.springbootmongodb.models.UserDetailDTO;
 
 @Document(collection = "user")
-public class User implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
+public class UserEntity {
 	@Id
 	private String id;
 	private String name;
@@ -22,13 +19,13 @@ public class User implements Serializable {
 	private String phone;
 	
 	@DBRef(lazy = true)
-	private List<Post> posts = new ArrayList<>();
+	private List<PostEntity> posts = new ArrayList<>();
 	
 	private UserDetailDTO login;
 	
-	public User() {}
+	public UserEntity() {}
 
-	public User(String id, String name, String email, String phone) {
+	public UserEntity(String id, String name, String email, String phone) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -67,11 +64,11 @@ public class User implements Serializable {
 		this.phone = phone;
 	}
 
-	public List<Post> getPosts() {
+	public List<PostEntity> getPosts() {
 		return posts;
 	}
 
-	public void setPosts(List<Post> posts) {
+	public void setPosts(List<PostEntity> posts) {
 		this.posts = posts;
 	}
 
@@ -96,7 +93,7 @@ public class User implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		UserEntity other = (UserEntity) obj;
 		return Objects.equals(id, other.id);
 	};	
 }

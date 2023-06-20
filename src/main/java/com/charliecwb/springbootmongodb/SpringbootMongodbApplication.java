@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.charliecwb.springbootmongodb.resources.util.Util;
 import com.charliecwb.springbootmongodb.services.NexmoService;
+import com.charliecwb.springbootmongodb.utils.Util;
 import com.nexmo.client.verify.VerifyClient;
 
 @SpringBootApplication

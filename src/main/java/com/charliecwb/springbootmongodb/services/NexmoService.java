@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import com.nexmo.client.NexmoClient;
-import com.nexmo.starter.NexmoCredentialsProperties;
 
 @Service
 public class NexmoService {

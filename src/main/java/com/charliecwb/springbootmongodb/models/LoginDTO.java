@@ -1,10 +1,6 @@
-package com.charliecwb.springbootmongodb.dto;
+package com.charliecwb.springbootmongodb.models;
 
-import java.io.Serializable;
-
-public class LoginDTO implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
+public class LoginDTO {	
 	private Boolean canLogin;
 	private Boolean needTwoFA;
 	

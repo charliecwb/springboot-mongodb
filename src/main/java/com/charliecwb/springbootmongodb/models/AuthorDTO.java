@@ -1,17 +1,14 @@
-package com.charliecwb.springbootmongodb.dto;
+package com.charliecwb.springbootmongodb.models;
 
-import java.io.Serializable;
+import com.charliecwb.springbootmongodb.entities.UserEntity;
 
-import com.charliecwb.springbootmongodb.domain.User;
-
-public class AuthorDTO implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class AuthorDTO {
 	private String id;
 	private String name;
 	
 	public AuthorDTO() {}
 
-	public AuthorDTO(User user) {
+	public AuthorDTO(UserEntity user) {
 		this.id = user.getId();
 		this.name = user.getName();
 	}

@@ -1,4 +1,4 @@
-package com.charliecwb.springbootmongodb.resources;
+package com.charliecwb.springbootmongodb.controllers;
 
 import java.net.URI;
 import java.util.List;
@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.charliecwb.springbootmongodb.domain.User;
-import com.charliecwb.springbootmongodb.dto.PostDTO;
-import com.charliecwb.springbootmongodb.dto.UserDTO;
+import com.charliecwb.springbootmongodb.models.PostDTO;
+import com.charliecwb.springbootmongodb.models.UserDTO;
 import com.charliecwb.springbootmongodb.services.UserService;
 
 @RestController
@@ -28,14 +27,14 @@ public class UserResource {
 	
 	@GetMapping
 	public ResponseEntity<List<UserDTO>> findAll() {
-		List<User> list = service.findAll();
-		List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x)).toList();
-		return ResponseEntity.ok().body(listDto);
+		var list = service.findAll();
+		var listDto = list.stream().map(x -> new UserDTO(x)).toList();
+		return ResponseEntity.ok(listDto);
 	}
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
-		UserDTO userDto = new UserDTO(service.findById(id));
+		var userDto = new UserDTO(service.findById(id));
 		return ResponseEntity.ok().body(userDto);
 	}
 	
@@ -54,15 +53,15 @@ public class UserResource {
 	
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<UserDTO> insert(@PathVariable String id, @RequestBody UserDTO obj) {
-		User user = service.fromDTO(obj);
+		var user = service.fromDTO(obj);
 		user.setId(id);
-		UserDTO resp = new UserDTO(service.update(user));
+		var resp = new UserDTO(service.update(user));
 		return ResponseEntity.ok().body(resp);
 	}
 	
 	@GetMapping(value = "/{id}/posts")
 	public ResponseEntity<List<PostDTO>> findPosts(@PathVariable String id) {
-		List<PostDTO> resp = service.findById(id).getPosts().stream().map(x -> new PostDTO(x)).toList();
+		var resp = service.findById(id).getPosts().stream().map(x -> new PostDTO(x)).toList();
 		return ResponseEntity.ok().body(resp);
 	}
 }

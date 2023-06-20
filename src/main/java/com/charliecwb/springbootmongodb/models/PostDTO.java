@@ -1,14 +1,11 @@
-package com.charliecwb.springbootmongodb.dto;
+package com.charliecwb.springbootmongodb.models;
 
-import java.io.Serializable;
 import java.util.Date;
 
-import com.charliecwb.springbootmongodb.domain.Post;
-import com.charliecwb.springbootmongodb.domain.User;
+import com.charliecwb.springbootmongodb.entities.PostEntity;
+import com.charliecwb.springbootmongodb.entities.UserEntity;
 
-public class PostDTO implements Serializable {	
-	private static final long serialVersionUID = 1L;
-	
+public class PostDTO {	
 	private String id;
 	private Date date;
 	private String title;
@@ -16,7 +13,7 @@ public class PostDTO implements Serializable {
 	
 	public PostDTO() {}
 	
-	public PostDTO(Post post) {
+	public PostDTO(PostEntity post) {
 		id = post.getId();
 		date = post.getDate();
 		title = post.getTitle();
@@ -55,8 +52,8 @@ public class PostDTO implements Serializable {
 		this.body = body;
 	}
 	
-	public Post fromDTO(User user) {
-		return new Post(getId(), getDate(), getTitle(), getBody(), 
+	public PostEntity fromDTO(UserEntity user) {
+		return new PostEntity(getId(), getDate(), getTitle(), getBody(), 
 				new AuthorDTO(user));
 	}	
 }

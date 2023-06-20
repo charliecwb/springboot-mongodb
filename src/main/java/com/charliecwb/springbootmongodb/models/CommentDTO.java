@@ -1,11 +1,8 @@
-package com.charliecwb.springbootmongodb.dto;
+package com.charliecwb.springbootmongodb.models;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class CommentDTO implements Serializable {
-	private static final long serialVersionUID = 1L;
-
+public class CommentDTO {
 	private String text;
 	private Date date;
 	private AuthorDTO author;

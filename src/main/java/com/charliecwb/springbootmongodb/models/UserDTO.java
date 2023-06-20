@@ -1,16 +1,12 @@
-package com.charliecwb.springbootmongodb.dto;
+package com.charliecwb.springbootmongodb.models;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.charliecwb.springbootmongodb.domain.User;
-import com.charliecwb.springbootmongodb.resources.util.Util;
+import com.charliecwb.springbootmongodb.entities.UserEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class UserDTO implements Serializable {
-	private static final long serialVersionUID = 1L;
-
+public class UserDTO {
 	private String id;
 	private String name;
 	private String email;
@@ -22,16 +18,14 @@ public class UserDTO implements Serializable {
 	public UserDTO() {
 	}
 
-	public UserDTO(User user) {
+	public UserDTO(UserEntity user) {
 		id = user.getId();
 		name = user.getName();
 		email = user.getEmail();
 		phone = user.getPhone();
 		posts = user.getPosts().stream().map(x -> new PostDTO(x)).toList();
-		login = new UserDetailDTO();
-		login.setUserName(user.getLogin().getUserName());
-		login.setPassword(Util.decryptPassword(user.getLogin().getPassword()));
-		login.setTwoFA(user.getLogin().getTwoFA());
+		login = new UserDetailDTO(user.getLogin().getUserName(), user.getLogin().getPassword(),
+				user.getLogin().getTwoFA());
 	}
 
 	public String getId() {

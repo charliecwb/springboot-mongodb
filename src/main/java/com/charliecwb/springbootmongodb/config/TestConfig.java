@@ -9,13 +9,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import com.charliecwb.springbootmongodb.domain.Post;
-import com.charliecwb.springbootmongodb.domain.User;
-import com.charliecwb.springbootmongodb.dto.AuthorDTO;
-import com.charliecwb.springbootmongodb.dto.CommentDTO;
-import com.charliecwb.springbootmongodb.dto.UserDetailDTO;
+import com.charliecwb.springbootmongodb.entities.UserEntity;
+import com.charliecwb.springbootmongodb.models.AuthorDTO;
+import com.charliecwb.springbootmongodb.models.CommentDTO;
+import com.charliecwb.springbootmongodb.models.UserDetailDTO;
 import com.charliecwb.springbootmongodb.repositories.PostRepository;
 import com.charliecwb.springbootmongodb.repositories.UserRepository;
+import com.charliecwb.springbootmongodb.entities.PostEntity;
+import com.charliecwb.springbootmongodb.secutiry.Sha512PasswordEncoder;
 
 @Configuration
 @Profile("test")
@@ -26,6 +27,9 @@ public class TestConfig implements CommandLineRunner{
 	@Autowired
 	private PostRepository postRepository;
 	
+	@Autowired 
+	private Sha512PasswordEncoder passEncoder;	
+	
 	@Override
 	public void run(String... args) throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -33,21 +37,21 @@ public class TestConfig implements CommandLineRunner{
 		userRepository.deleteAll();
 		postRepository.deleteAll();
 		
-		User u1 = new User(null, "Maria Brown", "maria@gmail.com", "+5541988482727");
-		User u2 = new User(null, "Alex Green", "alex@gmail.com", "+5541988482727");
-		User u3 = new User(null, "Bob Grey", "bob@gmail.com", "+5541988482727");
+		UserEntity u1 = new UserEntity(null, "Maria Brown", "maria@gmail.com", "+5541988482727");
+		UserEntity u2 = new UserEntity(null, "Alex Green", "alex@gmail.com", "+5541988482727");
+		UserEntity u3 = new UserEntity(null, "Bob Grey", "bob@gmail.com", "+5541988482727");
 					
-		UserDetailDTO l1 = new UserDetailDTO("maria_brown", "123456", true);
-		UserDetailDTO l2 = new UserDetailDTO("alex_green", "123456", false);
-		UserDetailDTO l3 = new UserDetailDTO("bob_grey", "123456", false);
+		UserDetailDTO l1 = new UserDetailDTO("maria_brown", passEncoder.encode("123456"), false);
+		UserDetailDTO l2 = new UserDetailDTO("alex_green", passEncoder.encode("123456"), false);
+		UserDetailDTO l3 = new UserDetailDTO("bob_grey", passEncoder.encode("123456"), false);
 		
 		u1.setLogin(l1);
 		u2.setLogin(l2);
 		u3.setLogin(l3);
 		userRepository.saveAll(Arrays.asList(u1, u2, u3));		
 		
-		Post p1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem", "Vou viajar para São Paulo", new AuthorDTO(u1));
-		Post p2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia", "Estoy em sampa!", new AuthorDTO(u1));
+		PostEntity p1 = new PostEntity(null, sdf.parse("21/03/2018"), "Partiu viagem", "Vou viajar para São Paulo", new AuthorDTO(u1));
+		PostEntity p2 = new PostEntity(null, sdf.parse("23/03/2018"), "Bom dia", "Estoy em sampa!", new AuthorDTO(u1));
 			
 		CommentDTO c1 = new CommentDTO("Boa viagem!", sdf.parse("21/03/2018"), new AuthorDTO(u2));
 		CommentDTO c2 = new CommentDTO("Aproveite", sdf.parse("22/03/2018"), new AuthorDTO(u3));

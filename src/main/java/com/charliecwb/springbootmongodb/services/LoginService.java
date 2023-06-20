@@ -7,10 +7,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.charliecwb.springbootmongodb.domain.User;
-import com.charliecwb.springbootmongodb.dto.LoginDTO;
-import com.charliecwb.springbootmongodb.dto.UserDetailDTO;
-import com.charliecwb.springbootmongodb.resources.util.Util;
+import com.charliecwb.springbootmongodb.entities.UserEntity;
+import com.charliecwb.springbootmongodb.models.LoginDTO;
+import com.charliecwb.springbootmongodb.secutiry.Sha512PasswordEncoder;
 import com.charliecwb.springbootmongodb.services.exception.InvalidLoginPasswordException;
 import com.charliecwb.springbootmongodb.services.exception.InvalidTwoFACodeException;
 import com.nexmo.client.NexmoClientException;
@@ -24,7 +23,9 @@ import com.nexmo.client.verify.VerifyStatus;
 public class LoginService {
 	private static NexmoService nexmoClient;
 	@Autowired
-	private UserService userService;	
+	private UserService userService;
+	@Autowired 
+	private Sha512PasswordEncoder passEncoder;
 	private static Map<String, String> userTwoFA = new HashMap<>();	
 	private static VerifyClient verifyClient;
 	
@@ -59,8 +60,8 @@ public class LoginService {
 		return null;
 	}
 	
-	public LoginDTO validate(UserDetailDTO userDetail) {
-		User user = userService.findByUserName(userDetail.getUserName());
+	public LoginDTO validate(String username) {
+		UserEntity user = userService.findByUserName(username);
 		if (user.getLogin().getTwoFA()) {
 			userTwoFA.put(user.getLogin().getUserName(), requestTwoFA(user.getName(), user.getPhone()));
 			return new LoginDTO(false, true);
@@ -68,10 +69,10 @@ public class LoginService {
 		return new LoginDTO(true, false);
 	}
 	
-	public Boolean login(UserDetailDTO userDetail, String code) {
+	public Boolean isValidUser(String username, String password, String code) {
 		Boolean isTwoFAOk = true;
 		Boolean isPasswordOk = false;
-		User user = userService.findByUserName(userDetail.getUserName());
+		UserEntity user = userService.findByUserName(username);
 		if (user.getLogin().getTwoFA()) {
 			if (userTwoFA.containsKey(user.getLogin().getUserName())) {
 				try {
@@ -89,12 +90,12 @@ public class LoginService {
 				isTwoFAOk = false;
 			}
 		}
-		isPasswordOk = userDetail.getPassword().equals(Util.decryptPassword(user.getLogin().getPassword()));
+		isPasswordOk = passEncoder.matches(password, user.getLogin().getPassword());
 		
 		if (!isPasswordOk) {
-			throw new InvalidLoginPasswordException(userDetail.getPassword());
+			throw new InvalidLoginPasswordException(password);
 		}
 		
-		return isTwoFAOk && isPasswordOk;		
+		return isTwoFAOk && isPasswordOk;	
 	}
 }

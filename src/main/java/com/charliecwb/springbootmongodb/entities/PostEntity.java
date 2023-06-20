@@ -1,6 +1,5 @@
-package com.charliecwb.springbootmongodb.domain;
+package com.charliecwb.springbootmongodb.entities;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,13 +8,11 @@ import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.charliecwb.springbootmongodb.dto.AuthorDTO;
-import com.charliecwb.springbootmongodb.dto.CommentDTO;
+import com.charliecwb.springbootmongodb.models.AuthorDTO;
+import com.charliecwb.springbootmongodb.models.CommentDTO;
 
 @Document
-public class Post implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
+public class PostEntity {	
 	@Id
 	private String id;
 	private Date date;
@@ -25,9 +22,9 @@ public class Post implements Serializable {
 	
 	private List<CommentDTO> comments = new ArrayList<>();
 	
-	public Post() {}
+	public PostEntity() {}
 
-	public Post(String id, Date date, String title, String body, AuthorDTO author) {
+	public PostEntity(String id, Date date, String title, String body, AuthorDTO author) {
 		this.id = id;
 		this.date = date;
 		this.title = title;
@@ -80,7 +77,7 @@ public class Post implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Post other = (Post) obj;
+		PostEntity other = (PostEntity) obj;
 		return Objects.equals(id, other.id);
 	}
 

@@ -1,15 +1,11 @@
-package com.charliecwb.springbootmongodb.dto;
+package com.charliecwb.springbootmongodb.models;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-import com.charliecwb.springbootmongodb.resources.util.Util;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class UserDetailDTO implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
+public class UserDetailDTO {		
 	@JsonProperty(required = true)
 	private String userName;
 	@JsonProperty(required = true)
@@ -21,7 +17,7 @@ public class UserDetailDTO implements Serializable {
 
 	public UserDetailDTO(String userName, String password, Boolean twoFA) {
 		this.userName = userName;
-		this.password = Util.encryptPassword(password);
+		this.password = password;
 		this.twoFA = twoFA;
 	}
 	

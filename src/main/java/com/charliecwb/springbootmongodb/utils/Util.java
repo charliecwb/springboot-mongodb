@@ -1,4 +1,4 @@
-package com.charliecwb.springbootmongodb.resources.util;
+package com.charliecwb.springbootmongodb.utils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,21 +9,8 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Base64;
 import java.util.Date;
 import java.util.TimeZone;
-
-import javax.crypto.Cipher;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.charliecwb.springbootmongodb.services.NexmoService;
-import com.nexmo.client.NexmoClientException;
-import com.nexmo.client.verify.CheckResponse;
-import com.nexmo.client.verify.VerifyClient;
-import com.nexmo.client.verify.VerifyRequest;
-import com.nexmo.client.verify.VerifyResponse;
-import com.nexmo.client.verify.VerifyStatus;
 
 public class Util {
 	public static final String ALGORITHM = "RSA";
@@ -66,32 +53,32 @@ public class Util {
 		}
 	}
 	
-	public static String decryptPassword(String password) {
-	    byte[] decryptedText = null;
-
-	    try {
-	      Cipher cipher = Cipher.getInstance(ALGORITHM);
-	      cipher.init(Cipher.DECRYPT_MODE, getPrivateKey());
-	      decryptedText = cipher.doFinal(Base64.getDecoder().decode(password));
-
-	    } catch (Exception ex) {
-	      ex.printStackTrace();
-	    }
-
-	    return new String(decryptedText);
-	}
-
-	public static String encryptPassword(String password) {
-	    byte[] textEncrypted = null;
-
-	    try {
-	      Cipher cipher = Cipher.getInstance(ALGORITHM);
-	      cipher.init(Cipher.ENCRYPT_MODE, getPublicKey());
-	      textEncrypted = cipher.doFinal(password.getBytes());
-	    } catch (Exception e) {
-	      e.printStackTrace();
-	    }
-
-		return Base64.getEncoder().encodeToString(textEncrypted);
-	}
+//	public static String decryptPassword(String password) {
+//	    byte[] decryptedText = null;
+//
+//	    try {
+//	      Cipher cipher = Cipher.getInstance(ALGORITHM);
+//	      cipher.init(Cipher.DECRYPT_MODE, getPrivateKey());
+//	      decryptedText = cipher.doFinal(Base64.getDecoder().decode(password));
+//
+//	    } catch (Exception ex) {
+//	      ex.printStackTrace();
+//	    }
+//
+//	    return new String(decryptedText);
+//	}
+//
+//	public static String encryptPassword(String password) {
+//	    byte[] textEncrypted = null;
+//
+//	    try {
+//	      Cipher cipher = Cipher.getInstance(ALGORITHM);
+//	      cipher.init(Cipher.ENCRYPT_MODE, getPublicKey());
+//	      textEncrypted = cipher.doFinal(password.getBytes());
+//	    } catch (Exception e) {
+//	      e.printStackTrace();
+//	    }
+//
+//		return Base64.getEncoder().encodeToString(textEncrypted);
+//	}
 }
