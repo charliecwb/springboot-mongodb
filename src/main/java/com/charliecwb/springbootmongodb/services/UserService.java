@@ -22,11 +22,7 @@ public class UserService {
 	}
 	
 	public UserEntity findByUserName(String text) {
-		UserEntity resp = repository.findByLoginUserName(text);
-		if (resp == null) {
-			throw new UserNotFoundException(text);
-		}
-		return resp;
+		return repository.findByLoginUserName(text);
 	}	
 	
 	public UserEntity findById(String id) {

@@ -25,13 +25,6 @@ public class UserResource {
 	@Autowired
 	private UserService service;
 	
-	@GetMapping
-	public ResponseEntity<List<UserDTO>> findAll() {
-		var list = service.findAll();
-		var listDto = list.stream().map(x -> new UserDTO(x)).toList();
-		return ResponseEntity.ok(listDto);
-	}
-	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
 		var userDto = new UserDTO(service.findById(id));
