@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.charliecwb.springbootmongodb.entities.UserEntity;
 import com.charliecwb.springbootmongodb.models.LoginDTO;
-import com.charliecwb.springbootmongodb.secutiry.Sha512PasswordEncoder;
 import com.charliecwb.springbootmongodb.services.exception.InvalidLoginPasswordException;
 import com.charliecwb.springbootmongodb.services.exception.InvalidTwoFACodeException;
 import com.nexmo.client.NexmoClientException;
@@ -25,7 +25,7 @@ public class LoginService {
 	@Autowired
 	private UserService userService;
 	@Autowired 
-	private Sha512PasswordEncoder passEncoder;
+	private PasswordEncoder passEncoder;
 	private static Map<String, String> userTwoFA = new HashMap<>();	
 	private static VerifyClient verifyClient;
 	

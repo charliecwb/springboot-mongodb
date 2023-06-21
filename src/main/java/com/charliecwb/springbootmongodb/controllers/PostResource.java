@@ -17,7 +17,7 @@ import com.charliecwb.springbootmongodb.services.PostService;
 import com.charliecwb.springbootmongodb.utils.Util;
 
 @RestController
-@RequestMapping(value="/posts")
+//@RequestMapping(value="/posts")
 public class PostResource {
 	@Autowired
 	private PostService service;

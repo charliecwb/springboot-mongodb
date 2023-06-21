@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.charliecwb.springbootmongodb.models.UserDTO;
-import com.charliecwb.springbootmongodb.services.UserServiceImpl;
+import com.charliecwb.springbootmongodb.services.PostService;
+import com.charliecwb.springbootmongodb.services.UserService;
 
 import jakarta.validation.Valid;
 
@@ -17,7 +18,10 @@ import jakarta.validation.Valid;
 public class AuthController {
 	
 	@Autowired
-	private UserServiceImpl userService;
+	private UserService userService;
+	
+	@Autowired
+	private PostService postService;	
 	
 	@GetMapping("/index")
     public String home(){
@@ -51,11 +55,11 @@ public class AuthController {
         return "redirect:/register?success";
     }
 	
-    @GetMapping("/users")
+    @GetMapping("/posts")
     public String users(Model model){
-        var users = userService.findAllUsers();
-        model.addAttribute("users", users);
-        return "users";
+        var posts = postService.findAll();
+        model.addAttribute("posts", posts);
+        return "posts";
     }
     
     @GetMapping("/login")

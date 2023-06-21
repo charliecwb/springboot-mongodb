@@ -8,15 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.charliecwb.springbootmongodb.entities.PostEntity;
 import com.charliecwb.springbootmongodb.entities.UserEntity;
 import com.charliecwb.springbootmongodb.models.AuthorDTO;
 import com.charliecwb.springbootmongodb.models.CommentDTO;
 import com.charliecwb.springbootmongodb.models.UserDetailDTO;
 import com.charliecwb.springbootmongodb.repositories.PostRepository;
 import com.charliecwb.springbootmongodb.repositories.UserRepository;
-import com.charliecwb.springbootmongodb.entities.PostEntity;
-import com.charliecwb.springbootmongodb.secutiry.Sha512PasswordEncoder;
 
 @Configuration
 @Profile("test")
@@ -28,7 +28,7 @@ public class TestConfig implements CommandLineRunner{
 	private PostRepository postRepository;
 	
 	@Autowired 
-	private Sha512PasswordEncoder passEncoder;	
+	private PasswordEncoder passEncoder;	
 	
 	@Override
 	public void run(String... args) throws Exception {
