@@ -8,12 +8,16 @@ import org.springframework.stereotype.Service;
 
 import com.charliecwb.springbootmongodb.entities.PostEntity;
 import com.charliecwb.springbootmongodb.repositories.PostRepository;
+import com.charliecwb.springbootmongodb.repositories.UserRepository;
 import com.charliecwb.springbootmongodb.services.exception.ObjectNotFoundException;
 
 @Service
 public class PostService {
 	@Autowired
 	private PostRepository repository;
+	
+	@Autowired
+	private UserRepository userRepository;	
 	
 	public List<PostEntity> findAll() {
 		return repository.findAll(); 
@@ -22,6 +26,11 @@ public class PostService {
 	public PostEntity findById(String id) {
 		return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id));
 	}
+	
+	public List<PostEntity> findByAuthor(String username) {
+		var user = userRepository.findByLoginUserName(username);
+		return repository.findByAuthorId(user.getId());
+	}	
 	
 	public List<PostEntity> findByTitle(String text) {
 		return repository.findByTitleContainingIgnoreCase(text);

@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import com.charliecwb.springbootmongodb.entities.UserEntity;
 
 public interface UserRepository extends MongoRepository<UserEntity, String> { 
-	UserEntity findByLoginUserName(String text);	
+	UserEntity findByLoginUserName(String username);	
 }

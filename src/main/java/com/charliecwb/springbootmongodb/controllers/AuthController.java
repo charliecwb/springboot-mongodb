@@ -56,7 +56,7 @@ public class AuthController {
     }
 	
     @GetMapping("/posts")
-    public String users(Model model){
+    public String posts(Model model){
         var posts = postService.findAll();
         model.addAttribute("posts", posts);
         return "posts";

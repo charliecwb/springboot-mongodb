@@ -8,7 +8,9 @@ import org.springframework.data.mongodb.repository.Query;
 
 import com.charliecwb.springbootmongodb.entities.PostEntity;
 
-public interface PostRepository extends MongoRepository<PostEntity, String> { 
+public interface PostRepository extends MongoRepository<PostEntity, String> {
+	List<PostEntity> findByAuthorId(String id);
+	
 	List<PostEntity> findByTitleContainingIgnoreCase(String text);
 	
 	List<PostEntity> findByBodyContainingIgnoreCase(String text);
